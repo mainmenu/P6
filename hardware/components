@@ -1,0 +1,25 @@
+HW components:
+Raspberry Zero
+2x DC motors
+driver
+speedmeasuring stuff(encoders)
+
+
+PIN CONFIG:
+driver(OUTPUT):
+PWMA = 19
+AIN1 = 12
+AIN2 = 5
+PWMB = 20
+BIN1 = 13
+BIN2 = 6
+STBY = 16
+
+sensors(INPUT):
+ECHOF=4
+ECHOL=27
+ECHOR=22
+TRIG=17
+
+ENCA =
+ENCB =
