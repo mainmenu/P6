@@ -1,0 +1,45 @@
+\BOOKMARK [0][-]{label:frontpage.0}{Front page}{}% 1
+\BOOKMARK [0][-]{label:titlepage_en.0}{English title page}{}% 2
+\BOOKMARK [0][-]{label:contents.0}{Contents}{}% 3
+\BOOKMARK [0][-]{chapter*.2}{Preface}{}% 4
+\BOOKMARK [0][-]{chapter.1}{1 Introduction}{}% 5
+\BOOKMARK [1][-]{section.1.1}{1.1 Mobile robotics}{chapter.1}% 6
+\BOOKMARK [1][-]{section.1.2}{1.2 Motivation and summary of project}{chapter.1}% 7
+\BOOKMARK [0][-]{chapter.2}{2 Hardware}{}% 8
+\BOOKMARK [1][-]{section.2.1}{2.1 Single board computer}{chapter.2}% 9
+\BOOKMARK [1][-]{section.2.2}{2.2 Distance measuring}{chapter.2}% 10
+\BOOKMARK [1][-]{section.2.3}{2.3 DC motors and chassis}{chapter.2}% 11
+\BOOKMARK [1][-]{section.2.4}{2.4 Motor driver}{chapter.2}% 12
+\BOOKMARK [1][-]{section.2.5}{2.5 Speed sensor}{chapter.2}% 13
+\BOOKMARK [1][-]{section.2.6}{2.6 Wi-Fi adapter}{chapter.2}% 14
+\BOOKMARK [1][-]{section.2.7}{2.7 Assembly}{chapter.2}% 15
+\BOOKMARK [0][-]{chapter.3}{3 Modeling}{}% 16
+\BOOKMARK [1][-]{section.3.1}{3.1 Differential Drive}{chapter.3}% 17
+\BOOKMARK [2][-]{subsection.3.1.1}{3.1.1 Non-holonomic constraints}{section.3.1}% 18
+\BOOKMARK [1][-]{section.3.2}{3.2 Dynamics}{chapter.3}% 19
+\BOOKMARK [2][-]{subsection.3.2.1}{3.2.1 Mechanical part}{section.3.2}% 20
+\BOOKMARK [2][-]{subsection.3.2.2}{3.2.2 Simulink Model}{section.3.2}% 21
+\BOOKMARK [2][-]{subsection.3.2.3}{3.2.3 Kinematics in simulink}{section.3.2}% 22
+\BOOKMARK [1][-]{section.3.3}{3.3 Complete model}{chapter.3}% 23
+\BOOKMARK [2][-]{subsection.3.3.1}{3.3.1 DC motors model analysis}{section.3.3}% 24
+\BOOKMARK [2][-]{subsection.3.3.2}{3.3.2 Kinematics model analysis}{section.3.3}% 25
+\BOOKMARK [1][-]{section.3.4}{3.4 Cruise Control}{chapter.3}% 26
+\BOOKMARK [2][-]{subsection.3.4.1}{3.4.1 PID controller}{section.3.4}% 27
+\BOOKMARK [2][-]{subsection.3.4.2}{3.4.2 Simulink Closed-loop Response}{section.3.4}% 28
+\BOOKMARK [0][-]{chapter.4}{4 Development}{}% 29
+\BOOKMARK [1][-]{section.4.1}{4.1 Ultrasonic sensors}{chapter.4}% 30
+\BOOKMARK [1][-]{section.4.2}{4.2 DC motors}{chapter.4}% 31
+\BOOKMARK [1][-]{section.4.3}{4.3 Raspberry Pi configuration and software}{chapter.4}% 32
+\BOOKMARK [2][-]{subsection.4.3.1}{4.3.1 Raspberry setup}{section.4.3}% 33
+\BOOKMARK [2][-]{subsection.4.3.2}{4.3.2 Software}{section.4.3}% 34
+\BOOKMARK [2][-]{subsection.4.3.3}{4.3.3 Ultrasonic sensor reading}{section.4.3}% 35
+\BOOKMARK [2][-]{subsection.4.3.4}{4.3.4 Movements}{section.4.3}% 36
+\BOOKMARK [2][-]{subsection.4.3.5}{4.3.5 Main loop}{section.4.3}% 37
+\BOOKMARK [1][-]{section.4.4}{4.4 N.B.}{chapter.4}% 38
+\BOOKMARK [0][-]{chapter.5}{5 Conclusion and Future Development}{}% 39
+\BOOKMARK [0][-]{appendix.A}{A Driver Chip}{}% 40
+\BOOKMARK [0][-]{appendix.B}{B Wi-Fi Adapter}{}% 41
+\BOOKMARK [0][-]{appendix.C}{C Ultrasonic Sensor}{}% 42
+\BOOKMARK [0][-]{appendix.D}{D Raspberry Pi}{}% 43
+\BOOKMARK [0][-]{appendix.E}{E Source Code}{}% 44
+\BOOKMARK [0][-]{appendix.F}{F Schematics}{}% 45

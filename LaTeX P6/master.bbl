@@ -1,0 +1,119 @@
+% $ biblatex auxiliary file $
+% $ biblatex version 2.5 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated as
+% required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+\entry{DDO}{misc}{}
+  \field{sortinit}{D}
+  \field{howpublished}{\url{http://www.scielo.org.ar/img/revistas/laar/v38n4/a01g19.png}}
+  \field{title}{Differential Drive Overview}
+\endentry
+
+\entry{FBD}{misc}{}
+  \field{sortinit}{E}
+  \field{howpublished}{\url{http://pubs.sciepub.com/ajme/1/1/1/image/fig3.png}}
+  \field{title}{Electric curcuit;Free body diagram of DC motor}
+\endentry
+
+\entry{ElonMusk}{misc}{}
+  \name{author}{1}{}{%
+    {{}%
+     {Hirsch}{H.}%
+     {Jerry}{J.}%
+     {}{}%
+     {}{}}%
+  }
+  \strng{namehash}{HJ1}
+  \strng{fullhash}{HJ1}
+  \field{sortinit}{H}
+  \field{howpublished}{\url{http://www.latimes.com/business/autos/la-fi-hy-musk-computer-on-wheels-20150319-story.html}}
+  \field{title}{Elon Musk: Model S not a car but a 'sophisticated computer on
+  wheels'}
+  \field{year}{2015}
+\endentry
+
+\entry{Motorref}{misc}{}
+  \field{sortinit}{M}
+  \field{howpublished}{\url{https://elektronik-lavpris.dk/p129700/robo0002-smart-robot-car-chassis-kit-with-speed-encoder-and-battery-box/}}
+  \field{title}{Motor and Chassie information}
+\endentry
+
+\entry{NHTSA}{misc}{}
+  \name{author}{1}{}{%
+    {{}%
+     {NHTSA}{N.}%
+     {}{}%
+     {}{}%
+     {}{}}%
+  }
+  \strng{namehash}{N1}
+  \strng{fullhash}{N1}
+  \field{sortinit}{N}
+  \field{howpublished}{\url{https://www.transportation.gov/AV/federal-automated-vehicles-policy-september-2016}}
+  \field{title}{Federal Automated Vehicles Policy}
+  \field{year}{2016}
+\endentry
+
+\entry{NonHB}{misc}{}
+  \field{sortinit}{N}
+  \field{howpublished}{\url{http://www.cds.caltech.edu/~murray/books/MLS/pdf/mls94-nonholo_v1_2.pdf}}
+  \field{title}{Nonholonomic Behavior in Robotic Systems}
+\endentry
+
+\entry{PID}{misc}{}
+  \field{sortinit}{P}
+  \field{howpublished}{\url{http://letsmakerobots.com/node/865}}
+  \field{title}{PID Control in mobile robotics}
+\endentry
+
+\entry{DriverlessCar}{misc}{}
+  \name{author}{1}{}{%
+    {{}%
+     {r}{r}%
+     {Lauren~Keating}{L.~K.}%
+     {}{}%
+     {}{}}%
+  }
+  \strng{namehash}{rLK1}
+  \strng{fullhash}{rLK1}
+  \field{sortinit}{R}
+  \field{howpublished}{\url{http://www.techtimes.com/articles/67253/20150728/driverless-cars-safe.html}}
+  \field{title}{The Driverless Car Debate: How Safe Are Autonomous Vehicles?}
+  \field{year}{2015}
+\endentry
+
+\entry{SpeedSensor}{misc}{}
+  \field{sortinit}{S}
+  \field{howpublished}{\url{http://www.banggood.com/LM393-Speed-Sensor-Detection-Speed-Module-For-Arduino-p-970033.html?currency=AUD&utm_source=myshopping&utm_medium=cpc&utm_content=saul&utm_campaign=xie-AU)}}
+  \field{title}{Speed sensor information}
+\endentry
+
+\entry{sys_module}{misc}{}
+  \field{sortinit}{S}
+  \field{howpublished}{\url{http://effbot.org/librarybook/sys.htm}}
+  \field{title}{Sys_module library}
+\endentry
+
+\entry{time_module}{misc}{}
+  \field{sortinit}{T}
+  \field{howpublished}{\url{http://effbot.org/librarybook/time.htm}}
+  \field{title}{Time module library}
+\endentry
+
+\lossort
+\endlossort
+
+\endinput
