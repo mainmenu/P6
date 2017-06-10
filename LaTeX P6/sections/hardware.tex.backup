@@ -1,0 +1,116 @@
+\chapter{Hardware}\label{ch:hardware}
+
+\paragraph{Hardware in the device} 
+
+
+
+In the following chapter we will see what hardware we have used to produce this device.
+First we decided on what platform we will be working on.
+
+\section{Single board computer} 
+
+Since we were allready familiar with the Raspberry Pi singleboard computer we decided that it is best to continue with the system we are allready know how to operate.
+At first we used the Raspberry Pi 2 model B but in concideration of the power supply and performance we swapped it out with a Raspberry Zero.
+
+
+\begin{figure}[h]
+\centering
+\includegraphics[width = 0.5\textwidth]{Raspberry-Pi-2}
+\caption{Raspberry Pi 2B}
+\label{fig::rasppi2b}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width = 0.5\textwidth]{raspberry_pi_zero_1}
+\caption{Raspberry Pi Zero}
+\label{fig::raspizero}
+\end{figure}
+
+We chose the Rasperry Pi Zero over the Raspberry Pi 2B because of the lesser power consumption and the size.
+Performance of the two computers are similar. 
+Zero has less RAM but in our project it does not have a significant impact.
+
+Specs of the Raspberry Pi Zero:
+1Ghz, Single-core CPU
+512MB RAM
+Mini HDMI and USB On-The-Go ports
+Micro USB power
+HAT-compatible 40-pin header
+Composite video and reset headers
+
+
+
+\section{Distance measuring} 
+
+Since our device would be avoiding obstacles on the way it is fitted with distance measuring sensors.
+We have decided to use ultra sonic sensors.
+Concidering the cost and the performance we are looking for we eventually settled on the HC-SR04 ultra sonic sensor.
+In our device we have used three of those sensors in orded to cover the front side of the veichle.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width = 0.5\textwidth]{hc-sr04}
+\caption{Ultra sonic sensor HC-SR04}
+\label{fig::hcsr04}
+\end{figure}
+
+\section{DC motors and the chassie} 
+
+We are using a premade complect of two DC motors and the chassie with the wheels.
+Each of the motors are connected to the wheels directly.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width = 0.5\textwidth]{chassie}
+\caption{Chassie and the two DC motors with a power supply}
+\label{fig::chassie}
+\end{figure}
+
+Motor specs:
+
+ Voltage:
+DC 3V
+DC 5V
+DC 6V
+Current:
+100 MA
+100MA
+120MA
+Reduction rate:48:1
+RPM (With tire):100,190,240
+Tire Diameter:66mm
+Car Speed(M/minute):20,39,48
+
+Motor Weight (g):50
+
+Motor Size:70mm*22mm*18mm
+
+Noise:<65dB 
+
+The two motors are identical and are used to move the device and to steer aswell
+
+\section{Motor driver} 
+
+At the beginning of the project we used a L9110S DC Stepper Motor Driver H-Bridge for controlling the movement of the wheels, but as we soon dicovered the suggested driver was not capable of regulating the motor speeds.
+To controll the speed of the veichle we then swapped it to the L298N driver.
+The second driver was capable of using the PWM to regulate the speed of the motors.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width = 0.5\textwidth]{driver2}
+\caption{The L298N driver}
+\label{fig::driver2}
+\end{figure}
+
+Driver specs:
+Working mode:	H bridge (double lines)
+Control chip:	L298N (ST)
+Logical voltage:	5V
+Driving voltage:	5V-35V
+Logical current:	max 36mA
+Driving current:	2A (max single bridge)
+Maximum power:	25W
+Storage temperature:	-20 °C +135 °C
+Periphery dimension:	43 x 43 x 27mm(L x W x H)
+
