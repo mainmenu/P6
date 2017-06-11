@@ -15,21 +15,21 @@ W = \frac{Rw_r - Rw_l}{l} \label{eq2}
 Equation \ref{eq1} describes the linear speed of the robotic vehicle, with respect to the angular speeds of each wheels (\textbf{$w_r$}) and (\textbf{$w_l$}) and the wheel radius (\textbf{R}), while \ref{eq2} describes the angular speed of the robot, with \textbf{l} being the axle length between the wheels. 
 The equation could be rewritten in matrix form as:
 
-\[  	
-\begin{bmatrix}
+\begin{equation}  	\label{eq3} 
+\begin{pmatrix}
 	v \\
 	\omega	
-\end{bmatrix} 
+\end{pmatrix} 
 =
-\begin{bmatrix} 
+\begin{pmatrix} 
 	\frac{R}{2} & \frac{R}{2} \\
 	\frac{R}{l} & \frac{-R}{l} 
-\end{bmatrix}
-\begin{bmatrix}
+\end{pmatrix}
+\begin{pmatrix}
 	\omega_r \\
 	\omega_l
-\end{bmatrix} \label{eq3} 	
-\] 
+\end{pmatrix}  	
+\end{equation}
 
 Analysis of the above equation leads to the consideration of three cases where certain behaviour is to be expected.
 
@@ -45,7 +45,7 @@ Analysis of the above equation leads to the consideration of three cases where c
 
 \subsection{Non-holonomic constraints} 
 
-A robot, using the differential drive steering design, has restricted local movements, while having no restrictions in global motion. \todo{Reference) That is similar to the restrictions on a car, where it is not possible to slide into a parallel position with respect to the current one. Nevertheless, the vehicle can still manoeuvre into the desired position, similar to parallel parking. 
+A robot, using the differential drive steering design, has restricted local movements, while having no restrictions in global motion. \todo{Reference} That is similar to the restrictions on a car, where it is not possible to slide into a parallel position with respect to the current one. Nevertheless, the vehicle can still manoeuvre into the desired position, similar to parallel parking. 
 
 If we consider \todo{insert vehicle figure} we can define the non-holonomic constraints of a differential drive vehicle as: 
 
@@ -59,36 +59,36 @@ As observed from equation \ref{eq4} and pictured by \todo{insert fig ref}, the r
 \tan{\theta} = \frac{\dot{y}}{\dot{x}} = \frac{dy}{dx}
 \end{equation} 
 
-\section{Kinematics} 
+\section{Kinematics} \label{kinematics}
 
 The kinematic model, similar to most rigid vehicles travelling on a two-dimensional plane, is of three degrees of freedom. From fig \todo{ref to xy figure}, we can identify \textbf{x} and \textbf{y} as the coordinates for the center of mass of the robot and \textbf{$\theta$} as the angle with respect to the x axis. From the constraints of the vehicle, the equations concerning the kinematic model are derived as:
 
 \begin{align}
 \dot{x} = vcos(\theta) \nonumber \\
-\dot{y} = vsin(\theta) \label{eq19} \\
+\dot{y} = vsin(\theta) \label{eq6} \\
 \dot{\theta} = \omega  \nonumber 
 \end{align}
 
-Where \textbf{v} is the linear and $\textbf{\omega}$ is the angular speed of the vehicle.
+Where \textbf{v} is the linear and \textbf{$\omega$} is the angular speed of the vehicle.
 The equations could further be represented in matrix form.
 
-\( 	
-\begin{bmatrix}
+\begin{equation} \label{eq7} 
+\begin{pmatrix}
 	\dot{x} \\
 	\dot{y} \\
 	\dot{\theta} \\ 
-\end{bmatrix} 
+\end{pmatrix} 
 =
-\begin{bmatrix} 
+\begin{pmatrix} 
 	\cos{\theta} & 0 \\
 	\sin{\theta} & 0 \\
 	0     		 & 1  
-\end{bmatrix}
-\begin{bmatrix}
+\end{pmatrix}
+\begin{pmatrix}
 	v \\
 	\omega
-\end{bmatrix} \label{eq3} 	
-\)
+\end{pmatrix}  	
+\end{equation}
 
 
 %The relation between the linear speed and the angular speed of the robot is similar to equation \ref{eq12}.
@@ -122,78 +122,125 @@ Parameter                   & Description                               & Unit		
 \label{my-label}
 \end{table}
 
-\begin{figure}[h] %change image
-\centering
-\includegraphics[width = 0.7\textwidth]{Motor_curcuit}
-\caption{Electrical circuit and free-body diagram of DC motor \cite{FBD}}
-\label{fig::motor_curcuit}
-\end{figure} 
+%\begin{figure}[h] %change image
+%\centering
+%\includegraphics[width = 0.7\textwidth]{Motor_curcuit}
+%\caption{Electrical circuit and free-body diagram of DC motor \cite{FBD}}
+%\label{fig::motor_curcuit}
+%\end{figure} 
 
 In this section the equations used in the dynamics model of the motor are derived and described.
 
 A DC motor produces mechanical torque applied to the shaft($\boldsymbol{T_e}$) linearly proportional to the armature current, the magnetic field and a torque constant($\boldsymbol{K_t}$). Assuming constant magnetic field, the produced torque is proportional to the torque constant($\boldsymbol{K_t}$) and the armature current(\textbf{I}).( Equation \ref{eq1})Furthermore, the back Emf (electromotive force)($E_b$) is equal to the angular velocity($\omega$) of the shaft multiplied with the Back emf constant($K_b$).(Equation \ref{eq2}) \\
 
 \begin{align}  
-T_e = IK_t \label{eq1}\\
-E_b = \omega K_b \label{eq2}
+T_e = IK_t \label{eq8}\\
+E_b = \omega K_b \label{eq9}
 \end{align}
 
 Because the two constants $K_t$ and $K_b$ are equal in SI units, in further equations and simulations they will be denoted only as a motor constant $K$.
 
 %VERIFY AND MODIFY
 
-\begin{equation} \label{eq3}
-K_t = K_b = K
-\end{equation} 
+%\begin{equation} \label{eq3}
+%K_t = K_b = K
+%\end{equation} 
 
-Furthermore, from figure \ref{fig::motor_curcuit}, using Kirchhoff's voltage law, we can derive the equations governing the electrical part of the DC motor, where the applied voltage (\textbf{V}) is proportional to the voltage drop through the armature resistance(\textbf{R}) and inductance(\textbf{L}), and the back electromotive voltage($\boldsymbol{E_b}$). \ref{eq4}
+Using Kirchhoff's voltage law, the equations modelling the electrical part of the DC motor are derived as:
 
-\begin{equation} \label{eq4}
+\begin{equation} \label{eq10}
 V = RI + L\frac{dI}{dt} + E_b
 \end{equation} 
 
-The mechanical part of the DC motor(mechanical part of figure \ref{fig::motor_curcuit}) is derived from the equations, where the mechanical torque($\boldsymbol{T_m}$) is the difference between the electromagnetic torque($\boldsymbol{T_e}$) and the rotational losses ($\boldsymbol{T_b}$). \ref{eq5}
+where (\textbf{V}) is the applied voltage, (\textbf{R}) the armature resistance,(\textbf{L}) the armature inductance, ($\boldsymbol{E_b}$) the Back EMF. \ref{eq4}
+Substitution ($\boldsymbol{E_b}$) with \ref{eq8} yields:
 
-\begin{equation} \label{eq5} 
-T_m = T_e - T_b
-\end{equation} 
+\begin{equation} \label{eq11}
+V = RI + L\frac{dI}{dt} + K_b\omega
+\end{equation}
 
-Using Newton's second law for rotational motion and substituting from equation\ref{eq1}, we can rewrite equation \ref{eq5} as:
+The mechanical part of the DC motor(mechanical part of figure \ref{fig::motor_curcuit}) is described by Newton's second law for rotational motion as:
 
-\begin{equation} \label{eq6}
-J\dot{\omega} = KI - b\omega
+\begin{equation} \label{eq12}
+J\dot{\omega} = K_tI - b\omega
 \end{equation}
 
 Where \textbf{J} is the load's inertia and \textbf{b} is the viscous friction in the motor's bearings.
 Further substitution in equation \ref{eq4} with the derived back emf from \ref{eq2} results in:
 
-\begin{equation} \label{eq7}
-V = RI + L\frac{dI}{dt} + K\omega
+Equations \ref{eq10} and \ref{eq11} are the equations describing the electrical and mechanical part of the motor.
+
+Applying the Laplace transform to the equations \ref{eq10} and \ref{eq11}, we can relate the output angular velocity to the input voltage as described in the transfer function:
+
+\begin{equation} \label{eq13}
+\frac{\Omega(s)}{V(s)} = \frac{K_t}{(Js + b)(sL + R) + K_tK_b}
 \end{equation}
 
-Equations \ref{eq6} and \ref{eq7} are the combined equations of motion for the DC motor.
+The state space form representation of equations \ref{eq10} and \ref{eq11} is represented in the form $\dot{x} = Ax + Bu$ , where the state variables are the current (\textbf{I}) and the angular speed ($\boldsymbol{\omega}$)
 
-Applying the Laplace transform to the equations, we can derive the transfer function of the DC motor.
-
-\begin{align}  
-sJ\Omega(s) + b\Omega(s) = KI(s) \label{eq8}\\
-sLI(s) + RI(s) = V(s) - K\Omega(s) \nonumber
-\end{align}
-
-\begin{center}
-$\Downarrow$
-\end{center}
-
-\begin{align} 
-\frac{\Omega(s)(sJ + b)}{K} = I(s) \label{eq9} \\
-I(s)(sL + R) + K\Omega(s) = V(s)  \nonumber 
-\end{align}
-
-Substituting with \textbf{I(s)} in the second part of equation \ref{eq9}, and setting the angular velocity($\boldsymbol{\Omega(s)}$) as output and the voltage (\textbf{V(s)}) as input results in the transfer function for the DC motor.(\ref{eq10})
-
-\begin{equation} \label{eq10}
-\frac{\Omega(s)}{V(s)} = \frac{K}{(Js + b)(sL + R) + K^2}
+\begin{equation} \label{eq14} 
+\begin{pmatrix}
+	\dot{I} \\
+	\dot{\omega} \\
+\end{pmatrix} 
+=
+\begin{pmatrix} 
+	\frac{-b}{J}   & \frac{-K_t}{J} \\
+	\frac{-K_b}{L} & \frac{-R}{L} \\ 
+\end{pmatrix}
+\begin{pmatrix}
+	I \\
+	\omega
+\end{pmatrix}
++
+\begin{pmatrix}
+	\frac{1}{L} \\
+	0
+\end{pmatrix}
+V	
 \end{equation}
+
+\section{Dead reckoning} 
+
+If we consider the robot's configuration \textbf{q}, previously described as (x,y,$\theta$), a way of measuring the above mentioned configuration is required in order to implement planning and feedback control. Incremental encoders are common in wheeled robots as they are able to measure the rotation of the wheels. However, they do not provide direct measurements of the position and orientation of the robot, thus dead reckoning (aka. odometric localization) is an affordable way to estimate the vehicle's configuration \textbf{q} by iterative integration of the kinematic model from \ref{kinematics}. The major drawback of the method is the proneness to error, that is if there exists a small error in any step of the localization it will influence the calculation of the subsequent positions, leading to potentially large deviation between the expected position and the localization results. From that we can conclude that dead reckoning is less precise in large areas due to systematic errors( eg. limited encoder resolution, unequal wheel diameters, etc.), and external factors not considered in the kinematics due to non-systematic errors( eg. wheel slippage on floors, inclined surfaces etc.) \todo{ref book Modelling.Planning and Control}
+
+Assuming constant inputs $\boldsymbol{v_k}$ and $\boldsymbol{\omega_k}$ in the kinematic model \ref{kinematics} for discrete time [$t_k$,$t_{k+1}$] (zero-order hold), for the sampling step \textbf{k} =1,2,...,n, the differential drive robot will traverse along an arc with a circle radius \textbf{D} ($\frac{v_k}{\omega_k}$). Furthermore if the starting position ($x_k$,$y_k$,$\theta_k$), for \textbf{k} =1, and the velocities $\boldsymbol{v_k}$ and $\boldsymbol{\omega_k}$ are known, we can reconstruct the value of ($x_{k+1}$,$y_{k+1}$,$\theta_{k+1}$) by forward integration of the kinematic model at the sampling time $t_{k+1}$. Several methods for numerical integration could be used, among which are the Forward Euler method, Second-order Runge-Kutta method or exact integration. \todo{ref Robotics book}. Because of inadequate accuracy due to the constant orientation $\theta_k$ in the Euler method, in this paper we will consider the Runge-Kutta approximation method and exact integration as described in the book "Robotics: Modelling, Planning and Control" by Bruno Siciliano.
+
+\begin{align}
+x_{k+1} = x_k + T_s v_k cos(\theta_k + \frac{\omega_k T_s}{2}) \\
+y_{k+1} = y_k + T_s v_k sin(\theta_k + \frac{\omega_k T_s}{2}) \label{eq15} \\
+\theta_{k+1} = \theta_k + T_s\omega_k  \nonumber 
+\end{align}
+
+Equation \ref{eq15} refers to the second-order Runge-Kutta method, where $\boldsymbol{T_s}$ is the duration of the sampling period $T_s = t_{k+1} - t_k$. It is important to note that the approximations for $x_{k+1}$ and $y_{k+1}$ use the average value of the unicycle orientation in the sampling period, compared to the less accurate Euler method with constant orientation.
+
+The exact reconstruction of ($x_{k+1}$,$y_{k+1}$,$\theta_{k+1}$), assuming constant velocity inputs in the sampling interval is given by \ref{}:\todo{reference to book} 
+
+\begin{align}
+x_{k+1} = x_k + \frac{v_k}{\omega_k}(sin(\theta_{k+1} - sin(\theta_k)\\
+y_{k+1} = y_k + \frac{v_k}{\omega_k}(cos(\theta_{k+1} - cos(\theta_k) \label{eq16} \\
+\theta_{k+1} = \theta_k + T_s\omega_k  \nonumber 
+\end{align}
+
+Note that the exact reconstruction is not defined for $w_k$ = 0 (motion in a line segment) thus, in implementation, a conditional statement has to handle the exception by using the Runge-Kutta method, which is still defined for $w_k$ = 0.
+
+Nevertheless, in practice it is convenient to estimate the input velocities using the incremental encoders	and by calculating the relative displacement $\Delta s$ and orientation $\Delta\theta$  over the sampling period:
+
+\begin{align}
+v_k T_s = \Delta s \nonumber \\
+\omega_k T_s = \Delta\theta \label{eq17} \\
+\frac{v_k}{\omega_k} = \frac{\Delta s}{\Delta\theta} \nonumber
+\end{align}
+
+In the case of a differential drive robot with a castor wheel, from equation \ref{eq1} and \ref{eq2}, we can define $\Delta s$ and $\Delta\theta$ as :
+
+\begin{align}
+\Delta s 	 = \frac{r}{2}(\Delta s_r + \Delta s_l) \label{eq18} \\
+\Delta\theta = \frac{r}{l}(\Delta s_r - \Delta s_l) \nonumber
+\end{align}
+
+Where $\Delta s_r$ and  $\Delta s_l$ are the rotation of the right and left wheel, respectively, measured by the incremental encoders during the sampling period. 
+
 
 \subsection{Simulink Model} \label{dc_model}
 
@@ -225,12 +272,12 @@ As evident from equation \ref{eq10}, the voltage is the input of the system, whi
 
 The block diagram representation in figure \ref{fig::dcmfigure} has the integrals of the rotational acceleration and the rate of change of the armature current considered as outputs based on equations \ref{eq11}.
 
-\begin{figure}[h]
-\centering
-\includegraphics[width=1.1\textwidth]{dc_motorD}
-\caption{DC Motor Block Diagram}
-\label{fig::dcmfigure}
-\end{figure}
+%\begin{figure}[h]
+%\centering
+%\includegraphics[width=1.1\textwidth]{dc_motorD}
+%\caption{DC Motor Block Diagram}
+%\label{fig::dcmfigure}
+%\end{figure}
 
 The inclusion of the gear ratio (\textbf{n}) and the radius of the wheel (\textbf{r}) products to the angular velocity in the end of the block diagram, results in model scaling for the linear velocity (\textbf{v}) of the wheel. (\ref{eq12})
 
@@ -249,30 +296,30 @@ Furthermore, as this paper is concerned with the development of a differential d
 
 Using equations \ref{eq13} and \ref{eq14} a simulink block diagram is constructed in figure \ref{fig::diff_simulink}.
 
-\begin{figure}[h]
-\centering
-\includegraphics[width = 0.8\textwidth]{diff_drive_kin_simulink}
-\caption{Differential drive kinematics}
-\label{fig::diff_simulink}
-\end{figure} 
+%\begin{figure}[h]
+%\centering
+%\includegraphics[width = 0.8\textwidth]%{diff_drive_kin_simulink}
+%\caption{Differential drive kinematics}
+%\label{fig::diff_simulink}
+%\end{figure} 
 
 The inputs are the individual wheel velocities, arranged to reflect the previously mentioned equations. The middle output is the turning radius \textbf{D}, which is governed by equation \ref{eq16}. The derived average linear speed is to be further used in equation \ref{eq20} to estimate the position of the robot based on it's angle through time, where the angle ($\theta$) is   obtain from integrating $\dot{\theta}$, which itself is the angular speed of the robot. 
 
-\begin{figure}[h]
-\centering
-\includegraphics[width = 0.6\textwidth]{kin_pos_subsystem}
-\caption{Positioning subsystem}
-\label{fig::pos_sub}
-\end{figure} 
+%\begin{figure}[h]
+%\centering
+%\includegraphics[width = 0.6\textwidth]%{kin_pos_subsystem}
+%\caption{Positioning subsystem}
+%\label{fig::pos_sub}
+%\end{figure} 
 
 In figure \ref{fig::pos_sub} the inputs are the the average speed and the orientation of the robot, while the outputs X and Y from equation \ref{eq20} are fed in a graph to observe the robot's trajectory through time. 
 
-\begin{figure}[h]
-\centering
-\includegraphics[width = 0.8\textwidth]{kin_model_pos}
-\caption{Positioning subsystem}
-\label{fig::pos_model}
-\end{figure} 
+%\begin{figure}[h]
+%\centering
+%\includegraphics[width = 0.8\textwidth]{kin_model_pos}
+%\caption{Positioning subsystem}
+%\label{fig::pos_model}
+%\end{figure} 
 
 The subsystem from figure \ref{fig::pos_model} is composed of blocks arranged to reflect equation \ref{eq20}. The outputs $\dot{x}$ and $\dot{y}$ are further integrated to graph the trajectory of the robot.
 
@@ -319,24 +366,24 @@ Obviously, both motors' models behave the same while applying the same step inpu
 
 We discussed in subsection \ref{kin_model} how small fluctuation in the speed of each motor, will results in a change of the trajectory of the whole robot. It is important to verify that the cases laid in the above mentioned subsection hold true.
 
-\begin{figure}[h]
-    \centering
-    \begin{subfigure}[h]{0.47\textwidth}
-        \includegraphics[width=\textwidth]{x_y_equalV}
-        \caption{XY-graph}
-        \label{fig:v_l=v_r}
-    \end{subfigure}
-    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+%\begin{figure}[h]
+%    \centering
+%    \begin{subfigure}[h]{0.47\textwidth}
+%        \includegraphics[width=\textwidth]{x_y_equalV}
+%        \caption{XY-graph}
+%        \label{fig:v_l=v_r}
+%    \end{subfigure}
+%    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
       %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[h]{0.47\textwidth}
-        \includegraphics[width=\textwidth]{AS_equalV}
-        \caption{Turning speed}
-        \label{fig:Wv_l=v_r}
-    \end{subfigure}
+%    \begin{subfigure}[h]{0.47\textwidth}
+%        \includegraphics[width=\textwidth]{AS_equalV}
+%        \caption{Turning speed}
+%        \label{fig:Wv_l=v_r}
+%    \end{subfigure}
     ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
     %(or a blank line to force the subfigure onto a new line)
-    \caption{For equal velocities}\label{fig:eqV}
-\end{figure}
+%    \caption{For equal velocities}\label{fig:eqV}
+%\end{figure}
 
 In figure \ref{fig:v_l=v_r}, when both wheel velocities match ($\boldsymbol{v_r = v_l}$), the trajectory the robot partakes is a straight line. 
 
@@ -355,24 +402,24 @@ The other case scenario is when one of the wheels has zero velocity (the other w
 
 The expected behaviour is rotation where the ICC is positioned at the zero velocity wheel. Furthermore, the turning speed should be constant, while the turning radius equal to $\frac{l}{2}$.
 
-\begin{figure}[h]
-    \centering
-    \begin{subfigure}[h]{0.47\textwidth}
-        \includegraphics[width=\textwidth]{turning_speed_zeroV}
-        \caption{Turning speed}
-        \label{fig:TzeroV}
-    \end{subfigure}
+%{figure}[h]
+%    \centering
+%    \begin{subfigure}[h]{0.47\textwidth}
+%        \includegraphics[width=\textwidth]{turning_speed_zeroV}
+%        \caption{Turning speed}
+%        \label{fig:TzeroV}
+%    \end{subfigure}
     ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
       %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[h]{0.47\textwidth}
-        \includegraphics[width=\textwidth]{turning_rad_zeroV}
-        \caption{Turning radius}
-        \label{fig:RzeroV}
-    \end{subfigure}
+%    \begin{subfigure}[h]{0.47\textwidth}
+%        \includegraphics[width=\textwidth]{turning_rad_zeroV}
+        %\caption{Turning radius}
+%        \label{fig:RzeroV}
+%    \end{subfigure}
     ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
     %(or a blank line to force the subfigure onto a new line)
-    \caption{For zero velocity left wheel}\label{fig:zeroV}
-\end{figure}
+    %\caption{For zero velocity left wheel}%\label{fig:zeroV}
+%\end{figure}
 
 In figure \ref{fig:TzeroV} it takes 1.5 seconds to reach constant turning speed, while in figure \ref{fig:RzeroV}, the turning radius is exactly 0.052 cm, which is exactly half of the distance between wheels. This satisfies the expected behaviour. \\
 
@@ -383,24 +430,7 @@ In figure \ref{fig:approxV} we can clearly see that the trajectory the robot par
 
 \newpage
 
-\begin{figure}[h]
-    \centering
-    \begin{subfigure}[h]{0.47\textwidth}
-        \includegraphics[width=\textwidth]{XY_approxV}
-        \caption{XY-graph}
-        \label{fig:approxV}
-    \end{subfigure}
-    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
-      %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[h]{0.47\textwidth}
-        \includegraphics[width=\textwidth]{R_approxV}
-        \caption{Turning radius}
-        \label{fig:RapproxV}
-    \end{subfigure}
-    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
-    %(or a blank line to force the subfigure onto a new line)
-    \caption{For different velocities}\label{fig:approxV}
-\end{figure}
+
 
 Clearly, a controller is necessary to maintain constant speed in both wheel, when the robot is required to follow a linear trajectory.
 
