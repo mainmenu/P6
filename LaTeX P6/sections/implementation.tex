@@ -1,0 +1,142 @@
+\chapter{Implementation} \label{ch:implementation}
+
+For this project we have fesided to use the Arduino Uno in order to build our robot. Some of the tests on the encoders and motors were ran on the Raspberry Zero, because in the previous semester we used the RP Zero to build the similar system. Rest of the hardware was described in the Hardware chapter. In this chapter we will only describe the more important parts of the implementation on the cartesian stabilization. 
+
+First we will look at the PI controllers for each wheel. Since the left and the right wheel are the same we will examin only one of them.
+
+Right wheel PI controller has been implemented as follows:
+\begin{lstlisting}
+float updatePIDr(int command1,float targetValue1, float currentValue1) {
+tickr_r = targetValue1*0.02*speedloop_sampletime ;
+error_r = tickr_r - currentValue1 ;
+pidTerm_r =lastpidTerm_r + (Kpr*(error_r - last_error_r)) +
+Kir*last_error_r ;
+if(pidTerm_r>255)
+pidTerm_r = 255 ;
+else if(pidTerm_r<0)
+pidTerm_r = 0 ;
+last_error_r = error_r;
+lastpidTerm_r = pidTerm_r ;
+return(pidTerm_r*1) ;
+}
+\end{lstlisting}
+
+Here you can see how the PID of the right wheel calculates the error of the wheel speed and then returns the new value for the main loop to make corrections on the motor. The left PID is done the same way exept all the calculations are made for the left wheel.
+
+Next we look at the PID controller for the $\Theta$ what then calculates the error on the deviation from the desired angle. The function foes as follows.
+
+\begin{lstlisting}
+float update_w(float targetvalue_theta , float currentvalue_theta)
+{
+errortheta = targetvalue_theta - currentvalue_theta ;
+omega = lastomega + Ktheta*(errortheta-lasterrortheta) +
+Kitheta*lasterrortheta ;
+lastomega = omega ;
+lasterrortheta = errortheta ;
+return(omega) ;
+}
+\end{lstlisting}
+
+Here we can see how the new $\omega$ is calculated in order to make the corrections to the trajectory.
+
+In the program we have two values vx and vy what are the target value of x and y minus the current value of x and y times the Kpo coefficient. This will give us the speed of the robot in x and y axis projections.
+
+\begin{lstlisting}
+float updatevx(float targetvalue_x , float currentvalue_x)
+{
+errorx = targetvalue_x - currentvalue_x ;
+vx = Kpo*errorx ;
+return(vx) ;
+}
+\end{lstlisting}
+
+As we can observe from the code in side the function has been used the proportional gain value Kpo in order to calculate new value for the vx.
+
+Now we can start examining the main loop where all the functions are put together in order to make the robot behave like it is meant to.
+
+First part of the main loop what we can see here:
+\begin{lstlisting}
+void loop() {
+if(millis()-Lmilli_position>positionloop_sampletime)
+{
+Lmilli_position = millis() ;
+vx = updatevx( xt, x) ;
+vy = updatevy( yt,y) ;
+}
+\end{lstlisting}
+
+Here we can see that if there has been too much time from the last measurment the values vx and vy are updated. In the current version the positionloop_sampletime is set to 0.1 second.
+
+In the next part of the code we will see the speed loop.
+\begin{lstlisting}
+if(millis()-Lmilli_speed > speedloop_sampletime)
+{
+Lmilli_speed = millis() ;
+if(atan2(yt,xt)>0)
+{
+thetat = abs(atan2(vy,vx)) ;
+}
+else
+{ thetat = -1*abs(atan2(vy,vx));
+}
+d = sqrt((xt-x)*(xt-x) + (yt-y)*(yt-y)) ;
+velocity = sqrt(vy*vy + vx*vx) ;
+wrobot = update_w(thetat,theta) ;
+\end{lstlisting}
+
+In this section we can see how the calculations for the required speed are done and how much is $d$. $d$ in our case is the distance between the robot and the target point. Aswell in the end we see the velocity and the angular speed calculations.
+
+\begin{lstlisting}
+speed_reqr = (2*velocity + wrobot*L)/(2*R*2*3.14) ;
+speed_reql = (2*velocity - wrobot*L)/(2*R*2*3.14) ;
+if(speed_reqr<0)
+{speed_reqr = 0 ;
+}
+if(speed_reql<0)
+{speed_reql = 0 ;
+}
+\end{lstlisting}
+
+The part above describes how we get the required speed for each of the wheels. Last six lines are added in order to assure the robot to move forward. For example if one of the required speeds were negative,while the otheris positive, we would have the robot turning aroud in one spot or just moveing very acwardly. In addition the idea is not to interfere with the odometric localisation. If one of the wheels would rotate in the other direction then we would not be abel to calculate the current position and therefor we could not do any navigation.
+
+\begin{lstlisting}
+PWM_vall= updatePidl(PWM_vall, speed_reql, countl);
+PWM_valr= PWM_vall ;
+if(PWM_vall<0)
+{
+digitalWrite(Bphase,LOW);
+analogWrite(Benable,PWM_vall);
+}
+else
+{
+digitalWrite(Benable,LOW);
+analogWrite(Bphase,PWM_vall);
+}
+PWM_valr= updatePidr(PWM_valr, speed_reqr, countr);
+if(PWM_valr<0)
+{
+digitalWrite(Aphase,LOW);
+analogWrite(Aenable,PWM_valr);
+}
+else
+{
+digitalWrite(Aenable,LOW);
+analogWrite(Aphase,PWM_valr);
+}
+Dr = 2*3.14*R*countr/20 ;
+Dl = 2*3.14*R*countl/20 ;
+Dc = (Dr+Dl)/2 ;
+theta = thetaprevious + (Dr-Dl)/L ;
+x = xprevious + Dc*cos(theta) ;
+y = yprevious + Dc*sin(theta) ;
+xprevious = x ;
+yprevious = y ;
+thetaprevious = theta ;
+countr = 0 ;
+countl = 0;
+}
+\end{lstlisting}
+
+In the last section of the main loop we can see how the commands are sent to the motors. In the end are the calculations for covered distance and the position estimation.
+
+For conclusion we must sai that by the time of writing this report we got the robot to move into the desired position. Further more we are working onwards on the device in order to make the posture stabilization work on the device
