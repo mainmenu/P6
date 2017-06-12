@@ -1,38 +1,34 @@
 \chapter{Control}\label{ch:control}
 
-
-
-
 \title{Control}
 
-\title{cruise control}
+This chapter will extend what was derived previously from the mathematical model, analyse the behaviour of the modelled system through simulations and address the cruise control and cartesian stabilization control problems, later implemented on a physical system. 
 
-In this chapter we will look more closely at the cruise controller developed for the robot. Cruise control is essential for the robot since it ensures, that it keeps following a straight line and in certain angle respect to the global co-ordinate axis. The motor model used in this chapter is the same one that we examined in the previous one. The before discussed motor model is completely linear, in what case we can apply classical control techniques in order to design the controller.
+\section{Cruise Control}
 
-In the cruise control we want to manipulate the velocity and the angular speed of the robot. In order to do that we must be abel to control each of the wheels angular speed namely $\omega_{r}$ and $\omega_{l}$.
+In this section we will look closer at the cruise control problem and the subsequent controller. Cruise control is essential for the robot since it ensures, that it keeps following a straight line and a certain angle with respect to the global co-ordinate axis. Since, the motor model derived in chapter \ref{ch:modeling}is linear, we can apply classical control techniques in order to design the controller.
+
+In the cruise control we want to manipulate the velocity and the angular speed of the robot. In order to do, each of the wheels angular speed namely $\omega_{r}$ and $\omega_{l}$, must be controlled 
 
 {\color{red} HERE GOES A FIGURE WHAT SHOWS ROBOT IN GLOBAL CO-ORDINATES}
 
 In the following figure you can see the closed loop block diagram for the motor speed control. The plant in this diagram is the same motor model as we looked in the previous chapter.
 
 \begin{figure}[H]
-
-	
 	\centering
  	\includegraphics[width=1\textwidth]{figures/motorspeedcontrolclosedloop.pdf}
-	
-	
 	\caption{Motor speed control} 
  	\label{fig:speedcontrol} 
 \end{figure}
 
-Now we will look more closely what is in that diagram. First we have the plant model whit what are we already familiar. Next we have the $K_{innerloop}$, what is the PI controller what we have designed to meet our desires. From the diagram we can see that we will have an $P_{innerloop}$ what is the motor model and the PWM term $k_{pwm}$ put together. As a result we get the following equation:
+The block diagram consists of the motor plant,$K_{innerloop}$ the PI controller that we have designed to meet our desires. $P_{innerloop}$ is the motor model and the PWM gain $k_{pwm}$ put together. As a result we get the following equation:
 
 \begin{equation}
-P_{innerloop}=\frac{k.k_{pwm}}{k^2+(sL_{a}+R_{a})(sJ+B)}=\frac{3300}{(s+1.02)(s+5000)}
+P_{innerloop}=\frac{k.k_{pwm}}{k^2+(sL_{a}+R_{a})(sJ+B)}=\frac{4200}{(s+0.94)(s+4421)}
 \end{equation}
+\todo{modify}
 
-Next we will look at the $K_{innerloop}$. This is the PI controller what we have developed for the system in order to meet the desired specifications. 
+Next we will look at the $K_{innerloop}$. This is the PI controller required to meet some specification. 
 
 \begin{equation}
 K_{innerloop}=\frac{g(s+z)}{s}*[\frac{100}{s+100}]^2
@@ -44,7 +40,7 @@ Following we can see that the open loop transfer function is given by the follow
 G_{innerloop}=P_{innerloop}*K_{innerloop}
 \end{equation}
 
-and the closedloop transfer function we get:
+Subsequently, the closed loop transfer is as follows:
 
 \begin{equation}
 H_{innerloop}=\frac{G_{innerloop}}{G_{innerloop}+1}
@@ -54,7 +50,7 @@ For the simulations we used three different values on the g and z. For the first
 
 The bode plots of the simulation can be seen below.
 
-\begin{figure}
+\begin{figure}{H}
 \centering
  	\includegraphics[width=1\textwidth]{figures/Ginnerbode.jpg}
 	
@@ -63,7 +59,7 @@ The bode plots of the simulation can be seen below.
  	\label{fig:ginnerloopbode} 
 \end{figure}
 
-\begin{figure}
+\begin{figure}{H}
 \centering
  	\includegraphics[width=1\textwidth]{figures/Hinnerbode.jpg}
 	
@@ -72,9 +68,9 @@ The bode plots of the simulation can be seen below.
  	\label{fig:hinnerloopbode} 
 \end{figure}
 
-From the next figure you can see the step responses of the three different settings on controllers.
+From the next figure you can see the step response of the three different controller configurations.
 
-\begin{figure}
+\begin{figure}{H}
 \centering
  	\includegraphics[width=1\textwidth]{figures/stepresponse.jpg}
 	
@@ -83,11 +79,9 @@ From the next figure you can see the step responses of the three different setti
  	\label{fig:stepresponse} 
 \end{figure}
 
-\title{Controlling the $\theta$}
+\subsection{Angle control}
 
-Previously we looked at the control design of the seperate angular velocities. In this section we will be takeing a closer look on the complete architecture of the cruise control. The whole cruise control layout can be seen in figure~\ref{fig:cruisecontrol}.
-
-In order to develop the architecture of the cruise control we first must look how can we obtain $\omega_{rref}$ and $\omega_{lref}$ by manipulating $\omega$ and $v$.
+In order to develop the complete architecture of the cruise control we must first perform manipulation on the equations describing the differential drive configuration. By inverting  the matrix describing the relations between the individual wheel velocities and the robot input velocities  look how can we obtain $\omega_{rref}$ and $\omega_{lref}$ from $\omega$ and $v$ by:
 
 \begin{equation} \label{eq66}
  \begin{pmatrix} 
@@ -96,8 +90,8 @@ In order to develop the architecture of the cruise control we first must look ho
  \end{pmatrix} 
  =
  \begin{pmatrix}  
- \frac{1}{R}   & \frac{L}{2R} \\ 
- \frac{1}{R} & \frac{-L}{2R} \\ 
+ \frac{1}{r}   & \frac{l}{2r} \\ 
+ \frac{1}{r} & \frac{-l}{2r} \\ 
  \end{pmatrix}
  \begin{pmatrix} 
  v_{ref} \\ 
@@ -109,21 +103,23 @@ In order to develop the architecture of the cruise control we first must look ho
 M^{-1}
 =
 \begin{pmatrix}  
- \frac{1}{R}   & \frac{L}{2R} \\ 
- \frac{1}{R} & \frac{-L}{2R} \\ 
+ \frac{1}{r}   & \frac{l}{2r} \\ 
+ \frac{1}{r} & \frac{-l}{2r} \\ 
  \end{pmatrix} 
 \end{equation}
 
-\begin{figure}
+The whole cruise control layout can be seen in figure~\ref{fig:cruisecontrol}.
+
+\begin{figure}{H}
 \centering
  	\includegraphics[width=1\textwidth]{figures/cruisecontrol.pdf}
 	\caption{Cruise control full architecture} 
  	\label{fig:cruisecontrol} 
 \end{figure}
 
-In the equations \ref{eq66} and \ref{eq67} we have $\omega_{rref}$ and $\omega_{lref}$ what are the seperate wheels angular speeds what are commanded by the system. $v_{ref}$ is the linear speed on the robot and $\omega_{ref}$ is the desired angular speed of the whole robot. $R$ is the radius of the wheels and $L$ is the lenght between motorized wheels.
+In equations \ref{eq66} and \ref{eq67} we have $\omega_{rref}$ and $\omega_{lref}$,the separate wheels angular speeds that are fed to the motor subsystem. $v_{ref}$ is the desired linear speed of the robot and $\omega_{ref}$ is the desired angular speed of the whole robot. $r$ is the radius of the wheels and $l$ is the length between the wheels.
 
-By analyzing the equations we can see that the transfer functions from reference linear speed($v_{ref}$) to the linear speed ($v$). Similarly is the transfer function from $\omega_{ref}$ to $\omega$. This will tell us that the $v_{ref}$ to $v$ and $\omega_{ref}$ to $\omega$ time and frequency responses are the same as are the motor speed responses. Using that knowlage we can now obtain new equations\ref{eq68} and \ref{eq69}
+Further analysis on the equations leads to the identification of the transfer functions from the referenced linear speed($v_{ref}$) to the linear speed ($v$). Similarly, we can identify the transfer function from $\omega_{ref}$ to $\omega$. This tells us that the $v_{ref}$ to $v$ and $\omega_{ref}$ to $\omega$ time and frequency responses are the same as the motor speed responses. Using that knowledge we combine the equations in \ref{eq68} and \ref{eq69}
 
 \begin{equation} \label{eq68}
  \begin{pmatrix} 
@@ -151,9 +147,9 @@ By analyzing the equations we can see that the transfer functions from reference
 H_{innerloop}(s)
 \end{equation}
 
-In the equations \ref{eq68} and \ref{eq69} the $v_{ref}$ is the linear velocity command and the $\omega_{ref}$ is the angular speed command for the robot.
+In equations \ref{eq68} and \ref{eq69} the $v_{ref}$ is the linear velocity command and the $\omega_{ref}$ is the angular speed command for the robot.
 
-Next part of the cruise control is to make the robot follow $\Theta_{red}$ the commanded angle. Examining the figure \ref{fig:cruisecontrol} we can see that the plant for the angle control is given by
+Next part of the cruise control is to make the robot follow $\theta_{red}$ the commanded angle. Examining the figure \ref{fig:cruisecontrol} we can see that the plant for the angle control is given by
 
 \begin{equation} \label{eq70}
 P_{\Theta}
@@ -163,9 +159,9 @@ P_{\Theta}
 \frac{24570}{(s+4995)(s+4.957)s}
 \end{equation}
 
-For simpler understanding we will simplify the angle control block diagram what can be seen in the figure \ref{fig:anglecontrol}
+For simplicity, we will simplify the angle control block diagram to what can be observed in figure \ref{fig:anglecontrol}
 
-\begin{figure} 
+\begin{figure}{H}
 \centering
  	\includegraphics[width=1\textwidth]{figures/cropanglecontrol.pdf}
 	
@@ -182,7 +178,7 @@ k_{\theta}
 g
 \end{equation}
 
-Furthermore we can obtain the transfer function for the open loop loop ($G_{\theta}$) what is given by
+Furthermore we can obtain the transfer function for the open loop loop ($G_{\theta}$) given by:
 
 \begin{equation} \label{eq72}
 G_{\theta}
@@ -190,7 +186,7 @@ G_{\theta}
 P_{\theta}k_{\theta}
 \end{equation}
 
-From here we can get the closed loop loop transfer function, what we will call $H_{\theta}$ shown in the equation \ref{eq73}
+From here we can get the closed loop loop transfer function, which we will call $H_{\theta}$, as shown in the equation \ref{eq73}
 
 \begin{equation} \label{eq73}
 H_{\theta}
@@ -198,7 +194,7 @@ H_{\theta}
 \frac{G_{\theta}}{G_{\theta}+1}
 \end{equation}
 
-In the figure \ref{fig:gthetabode} we can see the bode plot of the G_{\theta}. In figure \ref{fig:hthetabode} we have the bode plot of the $H_{\theta}$. And on the figure 
+Figure \ref{fig:gthetabode} shows the bode plot of the $G_{\theta}$, figure \ref{fig:hthetabode} the bode plot of the $H_{\theta}$, and figure /ref{fig:thetastep} the step response for the different controllers.
 
 \begin{figure} 
 \centering
@@ -227,7 +223,7 @@ In the figure \ref{fig:gthetabode} we can see the bode plot of the G_{\theta}. I
  	\label{fig:thetastep} 
 \end{figure}
 
-\title{Kinematic Model Analysis}
+\section{Kinematic Model Analysis}
 
 A system is said to be controllable if there exists a control law u(.) which can
 transfer the state of the system from any initial state x 0 to any final state x f within
@@ -243,8 +239,8 @@ We will now look more closely the kinematics model and determine if it is contro
  \end{pmatrix} 
  =
  \begin{pmatrix}  
- \cos\Theta   & 0 \\ 
- \sin\Theta & 0 \\
+ \cos\theta   & 0 \\ 
+ \sin\theta & 0 \\
  0 & 1\\ 
  \end{pmatrix}
  \begin{pmatrix} 
@@ -253,17 +249,17 @@ We will now look more closely the kinematics model and determine if it is contro
  \end{pmatrix} 
 \end{equation}
 
-Since we have the $\sin\Theta$ and $\cos\Theta$ inside the system it is non linear system.
+Since we have the $\sin\Theta$ and $\cos\Theta$, the system is defined as non-linear.
 
-To determine the controllability of the system we must check the sufficient conditions what is given by
+To determine the controllability of the system we must check the sufficient conditions given by
 
 \begin{equation} \label{eq75}
 rank(h1,h2,[h1,h2])
 =
 rank
 \begin{pmatrix} 
- \cos\Theta & 0 & sin\Theta\\ 
- \sin\Theta & 0 & -\cos\Theta\\
+ \cos\Theta & 0 & sin\theta\\ 
+ \sin\Theta & 0 & -\cos\theta\\
  0 & 1 & 0\\
  \end{pmatrix} 
 =
@@ -284,13 +280,13 @@ where
 
 Since we can see that $m$=$n$=3 we can determine that the system is controllable.  This shows us that indeed you can move to any position on the given plain with the robot.
 
-Before we had the kinematic model in the non linear form. Now we will linearize the model about the equilibrium and we obtain the following linearized model of the kinematics.
+Before we had the kinematic model in the non-linear form. If we linearise the model about an equilibrium point we obtain the following linearised model of the kinematics.
 
 \begin{equation}
 \begin{pmatrix}
 \dot{x} \\
 \dot{y} \\
-\dot{\Theta}
+\dot{\theta}
 \end{pmatrix}
 =
 \begin{pmatrix}
@@ -304,13 +300,11 @@ v \\
 \end{pmatrix}
 \end{equation}
 
-After the linearization we can see that the rank of the controllibility matrix is less then $n$. From that we can only determine that the controllability of the system has been lost after the linearization.
+After the linearisation we can see that the rank of the controllability matrix is less then $n$. From that we can determine that the controllability of the system has been lost after the linearisation, resulting in the requirement for non-linear control.
 
-\title{Cartesian Stabilization}
+\section{Cartesian Stabilization}
 
-Cartesian stabilisation control is necessary for the robot because it makes sure that the robot goes to the intended point.In the {\color{red}ref to astolfi book} it has been explained the transformation method of the posture stabilization. We will be useing the same method for the cartesian stabilization. 
-
-{\color{red}next subchapter}
+Cartesian stabilisation control is necessary to ensure that the robot goes to the intended point.In {\color{red}ref to astolfi book} the transformation method of the posture stabilization is explained, of which cartesian stabilization is a subset. Thus we can solve the problem by using non-linear control. 
 
 First we need to transform the kinematic model \ref{eq74} in the terms of the angular and linear displacements.
 
