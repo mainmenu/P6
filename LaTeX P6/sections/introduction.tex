@@ -2,18 +2,18 @@
 
 \paragraph{The Future of Vehicle Automation} 
 
-In recent years, a big emphasis has been put on the development of autonomous or semi-autonomous ground vehicles. It comes as no surprise considering it is no longer a question of \textit{will} this technology be implemented, but rather \textit{when}.\todo{citation needed}The benefits of autonomous vehicle integration can be considered invaluable. Currently 90\% of motor vehicle fatalities are estimated to be due to human errors \todo{citation needed}, meaning that vehicle automation could result in substantial decrease of accidents. Furthermore, depending on the percentage of autonomous vehicles on the roads, a research concluded, a drastic reduction in traffic and congestions .\todo{citation needed} 
+In recent years, a big emphasis has been put on the development of autonomous or semi-autonomous ground vehicles. It comes as no surprise considering it is no longer a question of \textit{will} this technology be implemented, but rather \textit{when}.The benefits of autonomous vehicle integration can be considered invaluable. Currently 90\% of motor vehicle fatalities are estimated to be due to human errors, meaning that vehicle automation could result in substantial decrease of accidents. Furthermore, depending on the percentage of autonomous vehicles on the roads, a research concluded, a drastic reduction in traffic and congestions .\cite{DriverlessCar}
 
-Nonetheless, there is still much work to be done in perfecting the control as well as the sensing capabilities of autonomous ground vehicles, if they are to become the default means of automotive transportation. Some of the issues consist of environmental conditions, which may disturb the sensors accuracy; precise mapping awareness, such as live maps that update when there is ongoing maintenance of infrastructure etc.; improved sensing capabilities (e.g advanced lidars) that can differentiate road damage, liquid spills etc.; ethical choices (as when an accident cannot be avoided), choosing to minimize potential damage and avoid casualties.
+Nonetheless, there is still much work to be done in perfecting the control as well as the sensing capabilities of autonomous ground vehicles, if they are to become the default means of automotive transportation. Some of the issues consist of environmental conditions, which may disturb the sensors accuracy; precise mapping awareness, such as live maps that update when there is ongoing maintenance of infrastructure etc.; improved sensing capabilities (e.g advanced lidars) that can differentiate road damage, liquid spills etc.; ethical choices (as when an accident cannot be avoided), choosing to minimize potential damage and avoid casualties.\cite{DriverlessCar}
 
 \subparagraph{Levels of Automation} 
 
-Automated vehicles, as defined by the \textit{National Highway Traffic Safety Administration}(NHTSA - USA), are ones in which at least some aspects of a safety-critical control function occurs without the operator's direct input.(e.g steering, throttle,braking etc.)\todo{citation Automated Vehicle Policy,pdf} As such they are classified by the \textbf{NHTSA} in five levels:
+Automated vehicles, as defined by the \textit{National Highway Traffic Safety Administration}(NHTSA - USA), are ones in which at least some aspects of a safety-critical control function occurs without the operator's direct input.(e.g steering, throttle,braking etc.)As such they are classified by the \textbf{NHTSA} in five levels:\cite{NHTSA}
 
 \begin{itemize}
 
 \item \textbf{Level 0 - No Automation} \\
-Logically, this level does not include any direct automation functions, however it may include some warning systems such as blind spot monitoring. The operator has the complete control over the vehicle.\todo{Citation from pdf for the whole list} 
+Logically, this level does not include any direct automation functions, however it may include some warning systems such as blind spot monitoring. The operator has the complete control over the vehicle. 
 \item \textbf{Level 1 - Function Specific Automation} \\
 The system may utilize one or more control functions operating independently from each other, such as cruise control or dynamic brake support. Nevertheless the driver has over control and can limit the functions of the supported aid systems.
 \item \textbf{Level 2 - Combined Function Automation} \\
@@ -25,29 +25,12 @@ Vehicle is designed to solely operate all safety-critical functions and supervis
   
 \end{itemize}
 
+Currently \textbf{Level 4} automation is in active development stage, which means it won't be long until every newly manufactured vehicle has an above level 1 degree of automation.\cite{NHTSA}
 
+\section{Mobile robotics}
 
-\section{Examples}
-You can also have examples in your document such as in example~\ref{ex:simple_example}.
-\begin{example}{An Example of an Example}
-  \label{ex:simple_example}
-  Here is an example with some math
-  \begin{equation}
-    0 = \exp(i\pi)+1\ .
-  \end{equation}
-  You can adjust the colour and the line width in the {\tt macros.tex} file.
-\end{example}
+While autonomous cars are becoming closer to "computer on wheels" rather than mechanical cars, as Elon Musk said in an interview, mobile robots could be viewed as the harbinger of this new era of automation.\cite{ElonMusk} Most systems, present in autonomous cars, are a scaled-up version of what has been present in robotics for a considerate time. Furthermore, an error or a failure of a system in an autonomous car would have much larger consequences than a system failure in domestic cleaning robot per se.
+That is why, the general motivation for this project has been to model, analyse and develop a wheeled mobile robot, resulting in knowledge that could later be applied in the more "mature" industry of autonomous vehicles. 
 
-\section{How Does Sections, Subsections, and Subsections Look?}
-Well, like this
-\subsection{This is a Subsection}
-and this
-\subsubsection{This is a Subsubsection}
-and this.
-
-\paragraph{A Paragraph}
-You can also use paragraph titles which look like this.
-
-\subparagraph{A Subparagraph} Moreover, you can also use subparagraph titles which look like this\todo{Is it possible to add a subsubparagraph?}. They have a small indentation as opposed to the paragraph titles.
-
-\todo[inline,color=green]{I think that a summary of this exciting chapter should be added.}
+\section{Motivation and summary of project}
+This paper is concerned with the development of a feedback control and obstacle avoidance in a differential drive robot. The information is distributed in five chapter, which individually cover most of the information needed to recreate the results obtained in this paper. Further development would increase the accuracy of developed model, as well as the physical system.    

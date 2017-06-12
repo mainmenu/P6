@@ -1,36 +1,30 @@
 \chapter{Hardware}\label{ch:hardware}
 
-\paragraph{Hardware in the device} 
 
-
-
-In the following chapter we will see what hardware we have used to produce this device.
-First we decided on what platform we will be working on.
+In the following chapter the hardware used to create the robot is discussed.
+The first decision made was what platform to use, based on the available resources and knowledge of use.
 
 \section{Single board computer} 
 
-Since we were allready familiar with the Raspberry Pi singleboard computer we decided that it is best to continue with the system we are allready know how to operate.
-At first we used the Raspberry Pi 2 model B but in concideration of the power supply and performance we swapped it out with a Raspberry Zero.
-
+The Raspberry Pi is the platform of choice used in the development of this project. Several factors influenced the choice, the most prominent of which was the familiarity the single board computer offered. Previous usage of Raspberry Pi 2B, allowed for faster decision making, when exploring for potential resources. 
 
 \begin{figure}[h]
 \centering
-\includegraphics[width = 0.5\textwidth]{Raspberry-Pi-2}
+\includegraphics[width = 0.4\textwidth]{Raspberry-Pi-2}
 \caption{Raspberry Pi 2B}
 \label{fig::rasppi2b}
 \end{figure}
 
 \begin{figure}[h]
 \centering
-\includegraphics[width = 0.5\textwidth]{raspberry_pi_zero_1}
+\includegraphics[width = 0.4\textwidth]{raspberry_pi_zero_1}
 \caption{Raspberry Pi Zero}
 \label{fig::raspizero}
 \end{figure}
 
+The initial choice was a Raspberry Pi 2B, however, after consideration of the size and required power consumption, a choice was made to use Raspberry Pi Zero instead.  
 
-We chose the Rasperry Pi Zero over the Raspberry Pi 2B because of the lesser power consumption and the size.
-Performance of the two computers are similar. 
-Zero has less RAM but in our project it does not have a significant impact.
+Performance of the two computers is almost similar, with the exception that the Zero model has less RAM compared to its 2B counterpart. Nevertheless, no significant impact was registered.
 
 Specs of the Raspberry Pi Zero:
 1Ghz, Single-core CPU
@@ -40,37 +34,33 @@ Micro USB power
 HAT-compatible 40-pin header
 Composite video and reset headers
 
-
-
 \section{Distance measuring} 
 
-Since our device would be avoiding obstacles on the way it is fitted with distance measuring sensors.
-We have decided to use ultra sonic sensors.
-Concidering the cost and the performance we are looking for we eventually settled on the HC-SR04 ultra sonic sensor.
-In our device we have used three of those sensors in orded to cover the front side of the veichle.
+Since the main purpose of the device would be to avoid obstacles, distance measuring sensors are required. There are several choices when it comes to distance sensors, vastly ranging in price and accuracy. The optimal choice would be a Lidar, however, at the time of development of this paper, the prices for Lidar were to high for practical implementation in a consumer application. 
+As a result, the choice was made to use a set of ultrasonic sensors, which scaled well according to price and accuracy of measurements.
+Three HC-SR04 ultrasonic sensors were used for distance measuring purposes in the device. The positioning of the sensors is on the front, and on the sides.
 
 \begin{figure}[h]
 \centering
-\includegraphics[width = 0.5\textwidth]{hc-sr04}
+\includegraphics[width = 0.4\textwidth]{hc-sr04}
 \caption{Ultra sonic sensor HC-SR04}
 \label{fig::hcsr04}
 \end{figure}
 
-\section{DC motors and the chassie} 
+\section{DC motors and chassis} 
 
-We are using a premade complect of two DC motors and the chassie with the wheels.
-Each of the motors are connected to the wheels directly.
+Considering the body of the robot, an inexpensive set of DC motors with a chassis was purchased and assembled. It comes with an attachable tachometer wheel for the motor, in order to incorporate a rotary encoder in the design, crucial for regulating the speed of the individual wheels.\cite{Motorref}
 
 \begin{figure}[h]
 \centering
-\includegraphics[width = 0.5\textwidth]{chassie}
+\includegraphics[width = 0.4\textwidth]{chassie}
 \caption{Chassie and the two DC motors with a power supply}
 \label{fig::chassie}
 \end{figure}
 
 Motor specs:
 
- Voltage:
+Voltage:
 DC 3V
 DC 5V
 DC 6V
@@ -89,18 +79,17 @@ Motor Size:70mm*22mm*18mm
 
 Noise:<65dB 
 
-(CITE: https://elektronik-lavpris.dk/p129700/robo0002-smart-robot-car-chassis-kit-with-speed-encoder-and-battery-box/)
-The two motors are identical and are used to move the device and to steer aswell
+The two motors are identical and are used to move, as well as steer, the device and to 
 
 \section{Motor driver} 
 
-At the beginning of the project we used a L9110S DC Stepper Motor Driver H-Bridge for controlling the movement of the wheels, but as we soon dicovered the suggested driver was not capable of regulating the motor speeds.
-To controll the speed of the veichle we then swapped it to the L298N driver.
+At the beginning of the project a L9110S DC Stepper Motor Driver H-Bridge was used, capable of controlling the direction of rotation of the wheels, but it was soon discovered the suggested driver was not capable of regulating the motor speeds.
+To control the speed of the robot, a replacement with a L298N driver had to be performed.
 The second driver was capable of using the PWM to regulate the speed of the motors.
 
 \begin{figure}[h]
 \centering
-\includegraphics[width = 0.5\textwidth]{driver2}
+\includegraphics[width = 0.4\textwidth]{driver2}
 \caption{The L298N driver}
 \label{fig::driver2}
 \end{figure}
@@ -113,16 +102,16 @@ Driving voltage:	5V-35V
 Logical current:	max 36mA
 Driving current:	2A (max single bridge)
 Maximum power:	25W
-Storage temperature:	-20 °C +135 °C
+Storage temperature:	-20 C +135 C
 Periphery dimension:	43 x 43 x 27mm(L x W x H)
 
 \section{Speed sensor}
 
-The speed of the wheels is measured by the LM393 IR speed sensors.
+The speed of the wheels is measured by the LM393 IR speed sensors attached to the tachometer wheel of the motor.\cite{SpeedSensor}
 
 \begin{figure}[h]
 \centering
-\includegraphics[width = 0.5\textwidth]{irspeed}
+\includegraphics[width = 0.4\textwidth]{irspeed}
 \caption{The LM393 IR speed sensor}
 \label{fig::driver2}
 \end{figure}
@@ -137,50 +126,40 @@ Dimensions: Approx.3.2 x 1.4 x 0.7cm
 Using wide voltage LM393 comparator
 Application: Widely used in dynamo speed detecting, pulse counting, etc
 Output form: Digital switch output (0 and 1) and Analog for Sensitivity.
-(CITE:http://www.banggood.com/LM393-Speed-Sensor-Detection-Speed-Module-For-Arduino-p-970033.html?currency=AUD&utm_source=myshopping&utm_medium=cpc&utm_content=saul&utm_campaign=xie-AU)
 
-\section{Wi-Fi dongle}
 
-For the monitoring of the device and connectivity we have used a Edimax EW-7811Un Wi-Fi adapter.
+\section{Wi-Fi adapter}
+
+In order to perform wireless monitoring, as well as extend the connectivity, an Edimax EW-7811Un Wi-Fi adapter, was used. 
 
 \begin{figure}[h]
 \centering
-\includegraphics[width = 0.5\textwidth]{edimax}
+\includegraphics[width = 0.4\textwidth]{edimax}
 \caption{Edimax EW-7811Un Wi-Fi adapter}
 \label{fig::edimax}
 \end{figure}
 
-\section{Assambly}
+\section{Assembly}
 
-In this section we will be looking more closely what has been connected to what and how.
-From the figure below we can see the layout of the whole system.
+In this section, the schematics of the assembled components has been analysed and given in figure \ref{fig::schematics}.
 
-\begin{figure}[h]
+\begin{figure}[h] 
 \centering
 \includegraphics[width = 1\textwidth]{P51_schem}
 \caption{Schematics of the device}
 \label{fig::schematics}
 \end{figure}
 
-In the middele you can see the Raspberry Pi.
-Since the software used to make this schematic did not have the Raspberry Pi Zero layout we used model 2 instead.
-Regarding our project id does not make a difference, since the pins are the same as Zero.
+In the middle section of the schematics, the Raspberry Pi is present. Unfortunately, the software used to make this schematic did not have the Raspberry Pi Zero layout, so the model 2 was used instead. Regarding the project there is not a big difference, as the pins are the same as Zero.
 
-On the right side of the system you can see three ultrasonic sensors.
-The ultrasonic sensors are connected to the RP Pi.
-The Vcc and GND pins all go to the Raspberry so that the power for the sensors is taken from the Raspberry itself.
-The triger pins all go to the same Raspberry pin.
-That means that when you trigger one of the sensors all of them will emit sonic impulse.
-The trigers are all on the same pin to preserv more pins on the Raspberry, it does not matter if they are on one or seperate pins.
-The echo pins of each of the sensors go into seperate ports on the Raspberry, each of them has a voltage divider connected to the GND as well.
+On the right side of the system three ultrasonic sensors could be seen, connected to the Raspberry Pi. The Vcc and GND pins are all connected to the Raspberry, allowing the sensors to draw power from the microcontroller itself. The trigger pins are all connected to the same Raspberry pin, meaning that when one of the sensors is triggered all of them will emit sonic impulse.
+The triggers are all on the same pin to not limit the number of available pins on the Raspberry. However there is not a significant difference,as the echo pins of each of the sensors go into separate ports on the Raspberry and each of them has a voltage divider connected to the GND.
 
-In the left bottom you can see the driver with the motors and a seperate battery pack.
-The battery pack is connected to the driver to give power to the motors and the driver itself aswell.
-Driver is connected to the Raspberry by 6 pins.
-Four of the pins are for the directions of the both motors.
-Two of the pins what are the enable pins are used for controlling the speed of the motors by PWM.
-The motors are connecter directly to the driver by two wires.
-In the top left you can see the two encoders what are used for monitoring the speed of the wheels.
+The driver is present in the bottom left of the schematics, alongside a battery pack connected to the driver and providing power to both motors. It is connected to the Raspberry by six pins, four responsible for the direction of the motors(2 for each motor) and 2 enable pins, used for controlling the speed of the motor by PWM.
 
-For the Raspberry we have a external power source what is not pictured on the figure.
+\newpage
+The motors are connected directly to the driver, by two wires.
+The two encoders, responsible for monitoring the speed of the wheels, are present in the top left of the schematics
+An external power source was used for the Raspberry Pi, which is not present in this schematics.
+
 

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9.6100 64-bit) (preloaded format=pdflatex 2016.11.23)  23 NOV 2016 19:09
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9.6100 64-bit) (preloaded format=pdflatex 2016.11.23)  20 DEC 2016 07:17
 entering extended mode
 **./preamble.tex
 (preamble.tex
@@ -1263,12 +1263,36 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 
 Package hyperref Warning: Option `pdfpagelabels' has already been used,
-(hyperref)                setting the option has no effect on input line 168.
+(hyperref)                setting the option has no effect on input line 169.
 
-Package hyperref Info: Option `plainpages' set `false' on input line 168.
-Package hyperref Info: Option `bookmarksnumbered' set `true' on input line 168.
+Package hyperref Info: Option `plainpages' set `false' on input line 169.
+Package hyperref Info: Option `bookmarksnumbered' set `true' on input line 169.
 
-Package hyperref Info: Option `colorlinks' set `false' on input line 168.
+Package hyperref Info: Option `colorlinks' set `false' on input line 169.
+(C:\Users\Philip\AppData\Roaming\MiKTeX\2.9\tex\latex\listings\listings.sty
+\lst@mode=\count327
+\lst@gtempboxa=\box40
+\lst@token=\toks58
+\lst@length=\count328
+\lst@currlwidth=\dimen268
+\lst@column=\count329
+\lst@pos=\count330
+\lst@lostspace=\dimen269
+\lst@width=\dimen270
+\lst@newlines=\count331
+\lst@lineno=\count332
+\lst@maxwidth=\dimen271
+
+(C:\Users\Philip\AppData\Roaming\MiKTeX\2.9\tex\latex\listings\lstmisc.sty
+File: lstmisc.sty 2015/06/04 1.6 (Carsten Heinz)
+\c@lstnumber=\count333
+\lst@skipnumbers=\count334
+\lst@framebox=\box41
+)
+(C:\Users\Philip\AppData\Roaming\MiKTeX\2.9\tex\latex\listings\listings.cfg
+File: listings.cfg 2015/06/04 1.6 listings configuration
+))
+Package: listings 2015/06/04 1.6 (Carsten Heinz)
 )
 ! Emergency stop.
 <*> ./preamble.tex
@@ -1277,11 +1301,11 @@ Package hyperref Info: Option `colorlinks' set `false' on input line 168.
 
  
 Here is how much of TeX's memory you used:
- 22766 strings out of 493333
- 408674 string characters out of 3143095
- 561305 words of memory out of 3000000
- 25945 multiletter control sequences out of 15000+200000
+ 23926 strings out of 493333
+ 425950 string characters out of 3143095
+ 578670 words of memory out of 3000000
+ 27093 multiletter control sequences out of 15000+200000
  4709 words of font info for 16 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 62i,0n,56p,826b,287s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 62i,0n,56p,830b,287s stack positions out of 5000i,500n,10000p,200000b,50000s
 !  ==> Fatal error occurred, no output PDF file produced!

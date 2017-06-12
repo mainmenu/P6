@@ -2,10 +2,10 @@
 
 \paragraph{Hardware testing} 
 
-\section{Ultrasonic sensors}
+\section{Ultrasonic sensors} \label{us_test}
 
-First of the hardware we started testing the ultrasonic sensors.
-For each of the sensors we built a voltage divider seen on the following figure.
+The first part of the hardware outline was testing of the ultrasonic sensors.
+For each of the sensors a voltage divider was build as seen on figure /ref{voltage1}.
 
 \begin{figure}[h]
 \centering
@@ -19,7 +19,7 @@ The values of the resistors are calculated by the following equation:
 {V}_{out}={V}_{in}*{R}_{2}/({R}_{1}+{R}_{2})
 \end{equation}
 
-We tried all the sensors out seperately by connecting them 1 by 1 to the raspberry and ran the test code.
+All sensors were tested out separately by connecting them individually to the Raspberry pi and running the test code below
 
 \begin{lstlisting}
 import RPi.GPIO as GPIO
@@ -36,7 +36,7 @@ GPIO.setup(ECHO, GPIO.IN)
 
 while True:
 	GPIO.output(TRIG, False)
-	print "W8ing on da sensor"
+	print "Waiting for the sensor"
 	time.sleep(2)
 
 	GPIO.output(TRIG, True)
@@ -58,11 +58,8 @@ while True:
 
 \end{lstlisting}
 
-Each of the sensors worked correctly while connected seperately so we moved on to try them out all of them at the same time.
-For that we connected all of the ultrasonic sensors to the raspberry and tried them out.
-For testing all of them we included some filtering aswell, because while taking every reading we saw that some of the values where off the chart high.
-High values was most probably due to the noise or just some random jittering.
-Our filter is made to take three readings at the time and then calculate the average.
+Each of the sensors worked as expected while connected separately, thus the logical progression was to test them out all at the same time.
+While taking the readings, it was noticeable that some of the values where random or distorted due to noise and could not be used for accurate measurement. Therefore, some filtering had to be included in order to scale the values to an acceptable limit. A moving average filter was used for the previously mentioned task by taking three reading at a time and calculating the average of the values. 
 
 \begin{lstlisting}
 def readsensor(PIN):
@@ -91,15 +88,11 @@ while True:
 	
 \end{lstlisting}
 
-As you can see from the code above we made sure that every reading takes exactly 0.05 seconds.
-This will help us make every cycle evenly long and we can predict the total time that the program runs the whole cycle.
-After applying the filter we saw that the readings became alot more percise and consistent.
-Therefore the time for the sensor reading loop becomes 3*0,05s=0,15s.
+From the code above, the application of the moving average filter could be seen. Importantly there was a noticeable improvement of the readings, which became much more precise and consistent.
+Furthermore, it can be seen that every reading takes less than 0.05 seconds. This is useful in making every cycle evenly long and predictable, when it comes to the total time that the program is required to run the full cycle. Therefore the time for the full sensor reading loop becomes $3\times0.05s=0,15s$.
 
 \section{DC motors}
-
-For testing the dc motors we drove the motors in forward gear and in backward gear through the driver we are useing.
-Below you can see the script we used to conduct the testing of the motors.
+To make sure the purchased DC motors were operational an initial testing was performed by driving each of them in forward and in backward gear through the used driver. This can be seen in script below.
 
 \begin{lstlisting}
 GPIO.setmode(GPIO.BCM)
@@ -114,7 +107,7 @@ def forward(x):
 
 def reverse(x):
     GPIO.output(StepPinBackward, GPIO.HIGH)
-    print "backwarding running motor"
+    print "backward running motor"
     time.sleep(x)
     GPIO.output(StepPinBackward, GPIO.LOW)
 
@@ -128,10 +121,9 @@ GPIO.cleanup()
 
 \end{lstlisting}
 
-As you can see from the code it runs one of the two motors first forward for 5 seconds and then backwards for 5 seconds.
-For the second motor we just changed the pin numbers(StepPinForward and StepPinBackward).
+As it can be seen from the code, one of the motors was initially driven forward for 5 seconds and subsequently backwards for 5 seconds. To apply the test for the second motor simply the pin numbers(StepPinForward and StepPinBackward) were changed.
 
-Further more we added the speed control via PWM. 
+Furthermore, Pulse Width Modulation (PWM) was utilized in order to regulate the separate speeds of the motors, as it was an initial condition to implement cruise control.
 in the final software what is ran on the device we have changed the forward() and reverse() so that we can change the speed of the motors at our desire.
 
 \begin{lstlisting}
@@ -146,25 +138,21 @@ in the final software what is ran on the device we have changed the forward() an
 	GPIO.output(StepPinBackward2, GPIO.LOW)
 \end{lstlisting}
 
-As you can see from the code above we use the drivers PWM input to change the speed of the veichle.
+As you can see from the code above we use the drivers PWM input to change the speed of the vehicle.
 
-\section{Raspberry configuration and software}
+\section{Raspberry Pi configuration and software}
 
-In this section we will look closer what has been done to the raspberry and how it works.
+In this section, a description of the steps taken to configure the Raspberry Pi, was made.
 
 \subsection{Raspberry setup}
 
-First we took the Raspberry Pi Zero and installed the Raspbian operating system.
-Then we enabled all the GPIO-s,ssh and got the latest Python.
-Since the Raspberry Pi Zero has only one usb port we decided to operate the device via WiFi.
-The earlier mentioned WiFi dongle is connected to the USB port and then we connected it to the provided WiFi network.
-For programming on the Raspberry we used tmux multitab tool and nano text editor via SSH from a Linux machine,
+Initially, after obtaining the Raspberry Pi Zero, an installation of the Raspbian OS was performed.
+Subsequently, all GPIO pins were enabled, followed by configuration of the Secure Shell (SSH) protocol in order to perform remote logins to the microcontroller. Furthermore, as mentioned in the Hardware chapter, due to it's size, the Raspberry Zero has only one USB port, resulting in a space limitation. Thus, the logical choice was to connect the Wi-Fi adapter to that USB port, and configure the microcontroller remotely, through the SSH. 
+Additionally, extra tools such as Tmux Multitab and Nano Text Editor were used to clarify the programming sessions.
 
 \subsection{Software}
 
-On the veichle itself we are using our self developed software to control the device.
-It is quite simple code in a sense.
-Code is written in Python and is using few external librarys.
+The software constituting the robot's behaviour is self-made with the addition of several external libraries 
 
 \begin{lstlisting}
 import sys
@@ -172,16 +160,19 @@ import time
 import RPi.GPIO as GPIO
 \end{lstlisting}
 
-To be exact we are using only 3 external librarys as you can see from the sniplet from above.
-The sys module:This module provides a number of functions and variables that can be used to manipulate different parts of the Python runtime environment.
-(CITATION FROM:http://effbot.org/librarybook/sys.htm)
-The time module: This module provides a number of functions to deal with dates and the time within a day. It’s a thin layer on top of the C runtime library.
-A given date and time can either be represented as a floating point value (the number of seconds since a reference date, usually January 1st, 1970), or as a time tuple.
-(CITATION FROM:http://effbot.org/librarybook/time.htm)
-And the RPi.GPIO module is for functions what are connected to the GPIO pins.
+To be precise, only three external libraries were used at the time of the development of this paper. Nevertheless, as the system is still in active development the list may expand after the submission of the documentation.
 
-Next we have the overall setup of the pins and the variables where you can see all the different values we are using in the code.
-For further details you can see the setup below.
+\begin{itemize}
+
+\item \textbf{Sys module} \\ This module provides a number of functions and variables that can be used to manipulate different parts of the Python runtime environment. \cite{sys_module}
+
+\item \textbf{Time module} \\ This module provides a number of functions to deal with dates and the time within a day. It is a thin layer on top of the C runtime library.
+A given date and time can either be represented as a floating point value (the number of seconds since a reference date, usually January 1st, 1970), or as a time tuple. \cite{time_module}
+
+\item \textbf{RPi.GPIO module} \\ This module is for functions that are connected to the GPIO pins.
+\end{itemize}
+
+The overall setup of the pins and the variables, with the different values used in the code, is present in the snippet below.
 
 \begin{lstlisting}
 #PIN numbers
@@ -232,9 +223,10 @@ PWMR=GPIO.PWM(20, 0.5)
 
 \subsection{Ultrasonic sensor reading}
 
-Since we are using ultrasonic sensors for reading the distances from the veichle to the closest ocstacle, we must ensure that we dont get too big noise from the sensors.
-For that purpouse we are using a little filter in the part where we read the data from the sensors.
-Below you can see the function made for the data gathering.
+
+As previously mentioned, the ultrasonic sensors are the proposed way of implementing collision detection. The desired function is for them to measure the distance from the robot to the closest present obstacle, and return the data for further usage in the code.
+In subsection \ref{us_test}, it was mentioned of the potential problems with noise and the proposed filtering method, using the average of every three reading. 
+Below is a section of the code, with the function for data acquisition after filtering the readings.
 
 \begin{lstlisting}
  def readsensor(PIN):
@@ -266,25 +258,26 @@ Below you can see the function made for the data gathering.
 		sensorL_data=distance
 \end{lstlisting}
 
-Our data reading from the sensors is quite straight forward.
-First the TRIG pin sends out a sonic impuls from one of the sensors.
-At the moment the impulse is triggered the software makes a timestamp.
-Second timestamp is done when the impulse returns to the sensor.
+The data reading is straightforward. The \textbf{TRIG} pin emits an ultrasonic impulse from a each of the sensors in addition to a digital timestamp that records the exact time of the event. When the impulse reaches back the sensor, a second timestamp is recorded. The logic behind it is that every loop should take equal amount of time for execution. 
+The first timestamp in the beginning of the loop is initialized with \textbf{$read_time_start1 = time.time().$} and calculated afterwards in \textbf{$time.sleep(0.05-(time.time()-read_time_start1))$}. The expected cycle length is 0.05 second and is done to ensure that reading are acquired in the sensing range 0.02m to 4m.
+The set time of 0.05 second is used, as it would give the range, limited by time.
 
-As you can see from the line: for x in range(0, 2): the reading of the sensor is done 3 times in a row.
-This ensures that we dont get a random values from the sensor but that we get atleast some filtering on it.
-Our filter basically takes the average from the 3 readings and then passes it on to the main cycle.
+\begin{equation}
+330(m/s)*0.05s=16.5
+\end{equation}
 
-The distance reading is designed so that every loop takes the same amout of time to run it.
-It is done by taking a timestamp in the beginning of the loop:read_time_start1 = time.time().
-Then calculating with the read_time_start1 on the line:time.sleep(0.05-(time.time()-read_time_start1)).
-This will ensure that every cycle is exactly 0.05 seconds long.
-The time is calculated so that we would surely get a reading in the sensors range.
-The sensor range is said to be from 0.02m to 4m.
-So we set the time to 0.05s because it would give us the range limited by time 330m/s*0.05s=16.5 and since its going back and forth then we divide it with 2 and we get the max range for the timelimitation 16.5/2=8.25m
-This will give us double the max range provided by the hardware itself.
+And since the impulse is going to the object in range and returning to the sensor, a division by 2 with give the max range for the time limitation 
 
-As you can see from the lines:
+\begin{equation}
+16.5/2=8.25m
+\end{equation}
+
+The result is almost double the sensing range supported by the hardware. 
+
+Furthermore, from the line: for x in range(0, 2): the reading of the sensor is done 3 times in a row, thus the implementation of the moving average filter.
+
+The last lines of code ensure that when data reading is initiated, it would pass the value to only one of the readings, avoiding data collision.
+
 \begin{lstlisting}
 	if PIN == ECHOF:
 		sensorF_data=distance
@@ -297,15 +290,14 @@ As you can see from the lines:
 
 \end{lstlisting}
 
-Every time the data reading is initiated the loop will pass on only one of the readings.
-
 \subsection{Movements}
 
-For different movements we have composed premade functions.
-There are all together 5 different functions for the movements.
+The expected movements of a differential drive robot was covered in section \ref{kin_analysis}. In this subsection, a description is conducted on the pre made functions governing the behaviour of the physical system. It is important to mention  
+  
+At the completion of this chapter, five different functions concerned with the movements, have been used.
 
-First we have the stop() function what does exactly like the name says it does, it stops any motion of the device.
-Below you can see the stop function.
+The most basic function is the \textbf{stop()}, which as it's name suggests, halts the motion of the device
+
 \begin{lstlisting}
 def stop():
 	GPIO.output(StepPinForward1, GPIO.LOW)
@@ -314,10 +306,10 @@ def stop():
 	GPIO.output(StepPinBackward2, GPIO.LOW)
 \end{lstlisting}
 
-This just turns all the movement enabling pins to low and the device stops if it had in any motion before.
+All the movement enabling pins will be set to low, which prompts the device to halt any ongoing movements. 
 
-As a second function we have the forward motion.
-From below you can see the function itself.
+The second function is the forward motion.
+
 \begin{lstlisting}
  def forward(SPEED):
 	print "FORWARD"
@@ -327,11 +319,11 @@ From below you can see the function itself.
 	PWMR.start(SPEED)
 \end{lstlisting}
 
-As you can see from the code when the forward function is executed both of the motors start moving in the same direction and the speed is determined by the variable SPEED.
-How the speed is determined we will see from further on when we get to the main loop of the veichle.
+From the code snippet, it can be seen that when the forward function is executed, both of the motors start moving in the same direction and the speed is determined by the variable SPEED. It is important to mention that small fluctuations in the speed of each wheel will cause curved motion instead of the desired forward linear motion, as discussed in section \ref{kin_analysis}. Thus appropriate control needs to be applied in order to maintain equal speed in both wheels. 
 
-Third we have the reverse what essentially is the same as the forward only that the pins triggered are the backward pins.
-As you can see from the code below.
+How the speed is determined will be further discussed in subsection \ref{main_loop}: main loop.
+
+The third function is the reverse, or what is essentially the same as the forward function only that the triggered pins are the backward ones. As in the forward movements, appropriate control is needed to maintain backward linear motion.
 
 \begin{lstlisting}
  def reverse(SPEED):
@@ -342,12 +334,13 @@ As you can see from the code below.
 	PWMR.start(SPEED)
 \end{lstlisting}
 
-These two movements: forward and backward are essential to make the device move.
+The two movements: forward and backward are the essential functions for the robot's linear motion.
 
 Next we have the turning functions left() and right().
-We decided that the turning functions should be made that the veichle takes the least amount of space to turn.
-Since we are using a differential drive we can just spin one wheel in one way and the other in the other direction so that the middle point of the wheel axis stais still.
-Below you can see the two functions needed for turning.
+It was decided that the turning functions should be made that the vehicle takes the least amount of space to turn.
+As it was explained in section \ref{kin_model},in a differential drive if the velocities of each wheel are the same but in a different direction, the robot will rotate around its middle point of the wheel axis, which essentially becomes the turning radius.
+
+Below are the two functions needed for turning.
 
 \begin{lstlisting}
  def right(turningtime,SPEED):
@@ -371,17 +364,15 @@ def left(turningtime,SPEED):
 	GPIO.output(StepPinBackward2, GPIO.LOW)
 \end{lstlisting}
 
-As we can see both turning right and left are made with predetermined factor turningtime.
-This will ensure us that the veichle will not over or under turn.
-And since we decided to mount only 3 sensors we settled with the turning ratio on 90 degrees.
-While altering the turningtime we can make the device turn any other amount of degrees.
-This can be implemented when there are more then 3 sensors and they are located differently.
+As we can see both turns, right and left, are made with predetermined factor \textbf{turningtime}.
+This will ensure that the vehicle will not over or under turn.
+And since a decision was made to mount 3 ultrasonic sensors, the turning ratio on 90 degrees was found adequate.
+Alteration of the turningtime will allow the device to turn to any desired amount of degrees, however a requirement of more than three ultrasonic sensors and specific positioning might be necessary.
 
-\subsection{Main loop}
+\subsection{Main loop} \label{main_loop}
 
-In this section we will look closer at the main loop what will be initiated when the device starts.
-Before we looked at all the functions seperately.
-Below you can see the mail loop what is constantly ran in the device.
+In this subsection the main loop, initiated when the device starts, is analysed.
+
 \begin{lstlisting}
 while True:
 	readsensor(ECHOF)
@@ -414,21 +405,21 @@ while True:
 			break
 \end{lstlisting}
 
-Here you can see that the loop is initiated with reading of the front sensor:readsensor(ECHOF).
-And any further action is then determined what the result is.
-If the distance is over 2m the veichle will start moving forward with full speed.
-When the distance is in between 200cm and 100 cm the vheicle will start moving with the medium speed.
-Minimal speed is initiated when the distance from the front sensor is between 100cm and 20cm.
-When the distance is under 20 cm the veichle will stop and will decide what to do next.
+The loop is initiated with reading of the front sensor \textbf{readsensor(ECHOF)}. Any further action is determined, based on the reading taken from it. If the distance to the closest object is over 2m the vehicle will start moving in a forward direction with full speed. When the distance drops down between 200 cm and 100 cm, the vehicle speed will be reduced to medium speed in order to prepare for a potential turning. Minimal speed is initiated when the distance from the front sensor drops down between 100cm and 20cm, allowing the robot to perform an instant stop. 
+When the distance to the closet object falls under 20 cm,the vehicle will stop and will decide how to proceed based on 3 possible cases. The ultrasonic sensors on the left and right will estimate the distance to the closest object on both sides.
 
-After stoping there are 3 options.
-First it will decide how far are the left and right boarders.
-If the sides are closer then 15 cm the device will back up and check again until one of the sides has more room then 15cm.
-Then the vheicle will turn left or right dependent where there is more room.
+\begin{itemize}
 
-If the sides are not close(over 15cm) then the veichle will turn to the side what has more space.
-It there is not enough space in front after the turn then it will turn again until there is.
+\item Case 1 \\ If both sides fall under 15 cm of the closest object, the robot will perform reverse motion and constantly recheck if space becomes available on either side. Once that is true, the robot will perform appropriate turn. 
+\item Case 2 \\ If one or both of the side sensors register distance to the closest object more than 15 cm, it will turn in the direction of the larger available space.
+\item Case 3 \\ If the robot performs a turn with a minimal acceptable distance reading, it will re-evaluate the possible turning options.
+
+\end{itemize}
+
 After the turning phase the loop will go back to the beginning and start all over again.
 
 The loop is made as simple as possible to avoid any complications while running the code.
 
+\section{N.B.}
+
+Unfortunately, due to shipping delays, the completion of this part was done without the acquisition of the optical encoders, necessary to implement the crucial wheel speed control. Obstacle avoidance was performed, relying on the similarity of the motors, and was sufficient to successfully test the above mentioned code. After the arrival of the encoders (which is after the completion of this paper),a thorough update would be performed on this chapter and presented in order at the examination date. 
